@@ -166,7 +166,7 @@ def inference(image_path):
     plt.plot(ans[0][:,0], ans[0][:,1], 'ro')
     plt.show()
 
-    return ans,img 
+    return ans 
     
     
         
