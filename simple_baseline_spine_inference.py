@@ -151,11 +151,6 @@ def inference(image_path):
     center, scale = img.center, img.scale
     ans, score = get_final_preds(heatmap_list, center, scale)
     
-    joint = [[],[]]
-    for i in range (0,3):
-      joint[0].append(int(ans[0][i][0]))
-      joint[1].append(int(ans[0][i][1]))
-    joint_arr = np.array(joint)
 
     plt.figure(figsize=(10,10))
     plt.imshow(cv2.cvtColor(img.img,cv2.COLOR_BGR2RGB))
@@ -167,7 +162,13 @@ def inference(image_path):
     plt.plot(ans[0][:,0], ans[0][:,1], 'ro')
     plt.show()
 
-    return joint_arr 
+    def head_joint(joint):
+        joint = [[],[]]
+        for i in range (0,3):
+            joint[0].append(int(ans[0][i][0]))
+            joint[1].append(int(ans[0][i][1]))
+        joint_arr = np.array(joint)
+        return joint_arr
     
     
         
