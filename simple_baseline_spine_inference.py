@@ -153,13 +153,14 @@ def inference(image_path):
     center, scale = img.center, img.scale
     ans, score = get_final_preds(heatmap_list, center, scale)
     
+    spine_joints = ans
 
     plt.figure(figsize=(10,10))
     plt.imshow(cv2.cvtColor(img.img,cv2.COLOR_BGR2RGB))
     plt.plot(ans[0][:,0], ans[0][:,1], 'ro')
     plt.show()
 
-    print(ans)
+    return spine_joints,img
     
     
         
