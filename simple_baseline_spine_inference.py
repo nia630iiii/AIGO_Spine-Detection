@@ -110,12 +110,9 @@ class ImageLoader():
 
 def load_image(img_path):
   img = cv2.imread(img_path)
-  #print(img.shape)
   box = np.array([0,0,img.shape[1], img.shape[0]])
   img = ImageLoader(img_path, box)
   img.load()
-  #plt.imshow(cv2.cvtColor(img.reshape_img,cv2.COLOR_BGR2RGB))
-  #plt.show()
   
   return img
 
@@ -163,7 +160,7 @@ def inference(image_path):
     plt.plot(ans[0][:,0], ans[0][:,1], 'ro')
     plt.show()
 
-    return joint_arr
+    return joint_arr,img
 
        
     
