@@ -108,9 +108,6 @@ class ImageLoader():
         return center, scale
 
 
-
-
-
 def load_image(img_path):
   img = cv2.imread(img_path)
   #print(img.shape)
@@ -120,6 +117,18 @@ def load_image(img_path):
   #plt.imshow(cv2.cvtColor(img.reshape_img,cv2.COLOR_BGR2RGB))
   #plt.show()
   
+  return img
+
+def draw_human_joints(img, joints):
+  for i in range(0, 16):
+    if (int(joints[0][i][0]) != 0 and int(joints[0][i][1]) != 0):
+      if (i >= 7 and i <= 9 or i >= 12 and i <= 13):
+        img = cv2.circle(img, (int(joints[0][i][0]),int(joints[0][i][1])), 
+          10, (200, 255, 0), thickness=-1, lineType=8)
+      else:  
+        img = cv2.circle(img, (int(joints[0][i][0]),int(joints[0][i][1])), 
+          10, (0, 255, 240), thickness=-1, lineType=8)
+    
   return img
 
 def inference(image_path):
@@ -155,12 +164,14 @@ def inference(image_path):
     
     spine_joints = ans
 
-    plt.figure(figsize=(10,10))
+    spine_img = draw_human_joints(img, spine_joints)
+    
+    """plt.figure(figsize=(10,10))
     plt.imshow(cv2.cvtColor(img.img,cv2.COLOR_BGR2RGB))
     plt.plot(ans[0][:,0], ans[0][:,1], 'ro')
-    plt.show()
+    plt.show()"""
 
-    return spine_joints,img
+    return spine_joints,spine_img 
     
     
         
