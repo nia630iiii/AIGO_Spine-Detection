@@ -119,13 +119,6 @@ def load_image(img_path):
   
   return img
 
-def draw_human_joints(img, joints):
-  for i in range(0, 4):
-    if (int(joints[0][i][0]) != 0 and int(joints[0][i][1]) != 0):
-        img = cv2.circle(img, (int(joints[0][i][0]),int(joints[0][i][1])), 
-          10, (0, 255, 240), thickness=-1, lineType=8)
-    
-  return img
 
 def inference(image_path):
     args = Namespace(
@@ -158,15 +151,23 @@ def inference(image_path):
     center, scale = img.center, img.scale
     ans, score = get_final_preds(heatmap_list, center, scale)
     
+    joint = [[],[]]
+    for i in range (0,3):
+      joint[0].append(int(ans[0][i][0]))
+      joint[1].append(int(ans[0][i][1]))
+    joint_arr = np.array(joint)
 
-    #spine_img = draw_human_joints(inp_tensor, ans)
+    plt.figure(figsize=(10,10))
+    plt.imshow(cv2.cvtColor(img.img,cv2.COLOR_BGR2RGB))
+    plt.plot(ans[0][:,0], ans[0][:,1], 'ro')
+    plt.show()
     
     plt.figure(figsize=(10,10))
     plt.imshow(cv2.cvtColor(img.img,cv2.COLOR_BGR2RGB))
     plt.plot(ans[0][:,0], ans[0][:,1], 'ro')
     plt.show()
 
-    return ans 
+    return joint_arr 
     
     
         
